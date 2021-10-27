@@ -5,12 +5,12 @@ metadata:
 spec:
   template:
     metadata:
-      name: pod-javadbprd
+      name: pod-javadbdev
       labels:
-        app: pod-javadbprd
+        app: pod-javadbdev
     spec:
       containers:
-        - name: container-pod-javadbprd
+        - name: container-pod-javadbdev
           image: willianrmelo1/springweb:v1
           env:
             - name: USER
@@ -33,5 +33,37 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: pod-javadbprd
+      app: pod-javadbdev
 
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-pod-javadbdev
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30002 # 30000 ~ 32767
+  selector:
+    app: pod-javadbdev
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+data:
+  PASSWORD: bXVkYW5kbw==
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+data:
+  USER: root
+  DATABASE_URL: mysql://10.0.1.252:3306/SpringWebYoutubeTest?useTimezone=true&serverTimezone=UTC

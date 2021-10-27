@@ -1,0 +1,21 @@
+- hosts:
+  - k8s-master1
+
+  tasks:
+    - name: "movendo arquivo de conf app"
+      copy:
+        src: "prod"
+        dest: "/root/"
+      become: yes
+
+    - name: "provisionando pod"
+      shell: sudo kubectl apply -f /root/prod/javaapp.yml
+      become: yes
+
+
+    - name: "Validando pod"
+      shell: kubectl get pods
+      become: yes
+      register: ps
+    - debug:
+        msg: " '{{ps.stdout_lines }}' "

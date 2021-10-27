@@ -35,3 +35,16 @@ spec:
     matchLabels:
       app: pod-javadbstg
 
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-pod-javadbstg
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30003 # 30000 ~ 32767
+  selector:
+    app: pod-javadbstg

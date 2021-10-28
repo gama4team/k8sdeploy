@@ -9,7 +9,7 @@
       become: yes
 
     - name: "provisionando pod"
-      shell: sudo kubectl apply -f /root/stg/javaapp.yml
+      shell: sudo kubectl apply -f /root/stage/javaapp.yml
       become: yes
 
 

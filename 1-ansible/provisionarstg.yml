@@ -4,7 +4,7 @@
   tasks:
     - name: "movendo arquivo de conf app"
       copy:
-        src: "stg"
+        src: "stage"
         dest: "/root/"
       become: yes
 
